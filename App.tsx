@@ -6,7 +6,9 @@ import { Scoreboard } from './games/Scoreboard';
 import { TeamAssigner } from './games/TeamAssigner';
 import { InitialQuiz } from './games/InitialQuiz';
 import { FourLetterQuiz } from './games/FourLetterQuiz';
-import { User, Users } from 'lucide-react';
+import { BodyTalkQuiz } from './games/BodyTalkQuiz';
+import { RelayTalk } from './games/RelayTalk';
+import { User, Users, PersonStanding, ListOrdered } from 'lucide-react';
 
 // Custom Icons Components
 const ScoreboardIcon = () => (
@@ -70,6 +72,22 @@ const FourLetterQuizIcon = () => (
   </div>
 );
 
+const BodyTalkIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center bg-gradient-to-br from-orange-400 to-red-500 rounded-full shadow-lg border-4 border-white/20">
+     <PersonStanding size={64} className="text-white animate-pulse" strokeWidth={2} />
+  </div>
+);
+
+const RelayTalkIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center bg-gradient-to-br from-pink-400 to-rose-500 rounded-2xl shadow-lg transform rotate-1">
+     <div className="flex -space-x-3">
+        <div className="w-10 h-10 rounded-full bg-white border-2 border-pink-200 flex items-center justify-center text-pink-500 z-30">1</div>
+        <div className="w-10 h-10 rounded-full bg-white/80 border-2 border-pink-200 flex items-center justify-center text-pink-500 z-20">2</div>
+        <div className="w-10 h-10 rounded-full bg-white/60 border-2 border-pink-200 flex items-center justify-center text-pink-500 z-10">3</div>
+     </div>
+  </div>
+);
+
 // 게임 목록 정의
 const GAMES: GameInfo[] = [
   {
@@ -96,7 +114,7 @@ const GAMES: GameInfo[] = [
   {
     id: 'TAG',
     title: '체스 술래잡기',
-    description: '두 팀이 번갈아 한 발씩 움직이며, 공격 차례에 상대방을 터치해 아웃시키는 게임입니다. 20턴 후 생존자가 많은 팀이 승리합니다.',
+    description: '두 팀이 번갈아 한 발씩 움직이며, 상대방을 터치해 아웃시키는 게임입니다.',
     icon: <ChessTagIcon />,
     color: 'from-green-400 to-emerald-500'
   },
@@ -113,6 +131,20 @@ const GAMES: GameInfo[] = [
     description: '앞의 두 글자를 보고 뒤의 두 글자를 이어 말하는 게임입니다',
     icon: <FourLetterQuizIcon />,
     color: 'from-[#667eea] to-[#764ba2]'
+  },
+  {
+    id: 'BODY_TALK',
+    title: '몸으로 말해요',
+    description: '말하지 않고 몸짓으로만 단어를 설명하여 맞추는 스피드 게임입니다',
+    icon: <BodyTalkIcon />,
+    color: 'from-orange-400 to-red-500'
+  },
+  {
+    id: 'RELAY_TALK',
+    title: '줄줄이 말해요',
+    description: '주제가 나오면 5명이 5초 내에 순서대로 정답을 말하는 게임입니다',
+    icon: <RelayTalkIcon />,
+    color: 'from-pink-400 to-rose-500'
   }
 ];
 
@@ -144,9 +176,13 @@ const App: React.FC = () => {
         return <InitialQuiz onBack={goHome} />;
       case 'FOUR_LETTER_QUIZ':
         return <FourLetterQuiz onBack={goHome} />;
+      case 'BODY_TALK':
+        return <BodyTalkQuiz onBack={goHome} />;
+      case 'RELAY_TALK':
+        return <RelayTalk onBack={goHome} />;
       default:
         return (
-          <div className="flex flex-col items-center w-full max-w-4xl animate-fade-in">
+          <div className="flex flex-col items-center w-full max-w-7xl animate-fade-in">
             <header className="mb-12 text-center">
               <h1 className="text-5xl md:text-7xl text-slate-800 mb-6 tracking-tight" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">교실놀이</span> 도우미
@@ -156,12 +192,12 @@ const App: React.FC = () => {
               </p>
             </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4">
               {GAMES.map((game) => (
                 <button
                   key={game.id}
                   onClick={() => handleGameSelect(game.id)}
-                  className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 overflow-hidden text-left"
+                  className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 overflow-hidden text-left h-full"
                 >
                   {/* Decorative Background */}
                   <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${game.color}`} />
@@ -171,15 +207,17 @@ const App: React.FC = () => {
                     {game.icon}
                   </div>
                   
-                  <h2 className="text-3xl text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
+                  <h2 className="text-2xl text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors text-center w-full" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                     {game.title}
                   </h2>
-                  <p className="text-slate-500 text-center px-4 break-keep">
+                  <p className="text-slate-500 text-center px-2 break-keep text-sm">
                     {game.description}
                   </p>
                   
-                  <div className="mt-8 px-6 py-2 rounded-full bg-slate-100 text-slate-600 text-sm group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    게임 시작하기 →
+                  <div className="mt-auto pt-6">
+                    <div className="px-6 py-2 rounded-full bg-slate-100 text-slate-600 text-sm group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                      게임 시작하기 →
+                    </div>
                   </div>
                 </button>
               ))}
@@ -194,7 +232,7 @@ const App: React.FC = () => {
     }
   };
 
-  const isFullScreenGame = currentGame === 'INITIAL_QUIZ' || currentGame === 'FOUR_LETTER_QUIZ';
+  const isFullScreenGame = currentGame === 'INITIAL_QUIZ' || currentGame === 'FOUR_LETTER_QUIZ' || currentGame === 'BODY_TALK' || currentGame === 'RELAY_TALK';
 
   return (
     <div className={`min-h-screen bg-slate-50 flex flex-col items-center ${isFullScreenGame ? 'p-0' : 'py-10 px-4'}`}>

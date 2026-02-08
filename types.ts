@@ -32,7 +32,7 @@ export interface TagHistoryItem {
   turnNumber: number;
 }
 
-export type GameId = 'HOME' | 'RPS' | 'TAG' | 'SCOREBOARD' | 'TEAM_MATCH' | 'INITIAL_QUIZ' | 'FOUR_LETTER_QUIZ';
+export type GameId = 'HOME' | 'RPS' | 'TAG' | 'SCOREBOARD' | 'TEAM_MATCH' | 'INITIAL_QUIZ' | 'FOUR_LETTER_QUIZ' | 'BODY_TALK' | 'RELAY_TALK';
 
 export interface GameInfo {
   id: GameId;
