@@ -1,3 +1,4 @@
+
 export type MoveType = 'SCISSORS' | 'ROCK' | 'PAPER';
 
 export interface MoveConfig {
@@ -13,6 +14,30 @@ export interface HistoryItem {
   id: string;
   move: MoveType;
   timestamp: Date;
+}
+
+// Types for One Step Tag Game
+export type Team = 'RED' | 'BLUE' | null;
+
+export enum GameMode {
+  SEQUENTIAL = 'SEQUENTIAL',
+  RANDOM = 'RANDOM'
+}
+
+export interface TagHistoryItem {
+  id: string;
+  team: Team;
+  turnNumber: number;
+}
+
+export type GameId = 'HOME' | 'RPS' | 'TAG' | 'SCOREBOARD';
+
+export interface GameInfo {
+  id: GameId;
+  title: string;
+  description: string;
+  emoji: string;
+  color: string;
 }
 
 export const MOVES: Record<MoveType, MoveConfig> = {

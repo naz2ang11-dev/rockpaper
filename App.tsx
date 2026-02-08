@@ -1,115 +1,112 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { Button } from './components/Button';
-import { MoveCard } from './components/MoveCard';
-import { HistoryList } from './components/HistoryList';
-import { MOVES, MoveType, HistoryItem } from './types';
+import React, { useState } from 'react';
+import { GameId, GameInfo } from './types';
+import { RockPaperScissors } from './games/RockPaperScissors';
+import { OneStepTag } from './games/OneStepTag';
+import { Scoreboard } from './games/Scoreboard';
+
+// 게임 목록 정의
+const GAMES: GameInfo[] = [
+  {
+    id: 'SCOREBOARD',
+    title: '점수판',
+    description: '교실놀이나 체육시간에 활용하세요',
+    emoji: '🏆',
+    color: 'from-emerald-400 to-teal-500'
+  },
+  {
+    id: 'RPS',
+    title: '랜덤 가위바위보',
+    description: '랜덤으로 가위바위보가 제시됩니다',
+    emoji: '✌️',
+    color: 'from-yellow-400 to-orange-500'
+  },
+  {
+    id: 'TAG',
+    title: '체스 술래잡기',
+    description: '이종대왕 체스 술래잡기때 활용하세요',
+    emoji: '🏃',
+    color: 'from-green-400 to-emerald-500'
+  }
+];
 
 const App: React.FC = () => {
-  const [currentMove, setCurrentMove] = useState<MoveType | null>(null);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentGame, setCurrentGame] = useState<GameId>('HOME');
 
-  // Sound effect function using Web Audio API
-  const playPopSound = useCallback(() => {
-    try {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioContext) return;
+  // 게임 선택 핸들러
+  const handleGameSelect = (id: GameId) => {
+    setCurrentGame(id);
+  };
 
-      const audioCtx = new AudioContext();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
+  // 홈으로 돌아가기
+  const goHome = () => {
+    setCurrentGame('HOME');
+  };
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
+  // 현재 상태에 따라 화면 렌더링
+  const renderContent = () => {
+    switch (currentGame) {
+      case 'SCOREBOARD':
+        return <Scoreboard onBack={goHome} />;
+      case 'RPS':
+        return <RockPaperScissors onBack={goHome} />;
+      case 'TAG':
+        return <OneStepTag onBack={goHome} />;
+      default:
+        return (
+          <div className="flex flex-col items-center w-full max-w-4xl animate-fade-in">
+            <header className="mb-12 text-center">
+              <h1 className="text-4xl md:text-6xl font-black text-slate-800 mb-4 tracking-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">미니게임</span> 천국
+              </h1>
+              <p className="text-slate-500 text-lg">
+                심심할 때 즐기는 초간단 웹 게임 모음집
+              </p>
+            </header>
 
-      // "Pop" sound configuration
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full px-4">
+              {GAMES.map((game) => (
+                <button
+                  key={game.id}
+                  onClick={() => handleGameSelect(game.id)}
+                  className="group relative flex flex-col items-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100 overflow-hidden text-left"
+                >
+                  {/* Decorative Background */}
+                  <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${game.color}`} />
+                  <div className={`absolute -right-10 -bottom-10 w-40 h-40 bg-gradient-to-br ${game.color} opacity-10 rounded-full group-hover:scale-150 transition-transform duration-500`} />
 
-      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-
-      oscillator.start();
-      oscillator.stop(audioCtx.currentTime + 0.15);
-    } catch (e) {
-      console.error("Audio playback failed", e);
-    }
-  }, []);
-
-  const generateRandomMove = useCallback(() => {
-    // Play sound
-    playPopSound();
-
-    // Generate random move immediately without animation
-    const moves = Object.keys(MOVES) as MoveType[];
-    const finalMove = moves[Math.floor(Math.random() * moves.length)];
-    setCurrentMove(finalMove);
-
-    // Add to history
-    const newItem: HistoryItem = {
-      id: crypto.randomUUID(),
-      move: finalMove,
-      timestamp: new Date()
-    };
-    setHistory(prev => [newItem, ...prev]);
-  }, [playPopSound]);
-
-  const clearHistory = () => {
-    if (window.confirm('정말로 모든 기록을 지우시겠습니까?')) {
-      setHistory([]);
-      setCurrentMove(null);
+                  <div className="text-7xl mb-6 transform group-hover:scale-110 transition-transform duration-300 filter drop-shadow-sm">
+                    {game.emoji}
+                  </div>
+                  
+                  <h2 className="text-2xl font-black text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors">
+                    {game.title}
+                  </h2>
+                  <p className="text-slate-500 text-center px-4 font-medium">
+                    {game.description}
+                  </p>
+                  
+                  <div className="mt-8 px-6 py-2 rounded-full bg-slate-100 text-slate-600 font-bold text-sm group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    게임 시작하기 →
+                  </div>
+                </button>
+              ))}
+            </div>
+            
+            <div className="mt-16 p-6 bg-indigo-50 rounded-2xl border border-indigo-100 text-center max-w-lg">
+              <p className="text-indigo-800 font-bold mb-1">✨ 새로운 게임이 추가될 예정입니다!</p>
+              <p className="text-indigo-600 text-sm">자주 방문해서 확인해주세요.</p>
+            </div>
+          </div>
+        );
     }
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center py-10 px-4">
-      {/* Header */}
-      <header className="mb-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-2 tracking-tight">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">랜덤</span> 가위바위보
-        </h1>
-        <p className="text-slate-500 font-medium">
-          버튼을 눌러 행운을 시험해보세요!
-        </p>
-      </header>
+      {renderContent()}
 
-      {/* Main Game Area */}
-      <main className="w-full max-w-md flex flex-col items-center space-y-8">
-        
-        {/* Display Area */}
-        <div className="w-full min-h-[500px] flex items-center justify-center relative">
-          {currentMove ? (
-            <MoveCard config={MOVES[currentMove]} isMain={true} />
-          ) : (
-            <div className="flex flex-col items-center justify-center p-12 rounded-3xl bg-slate-200 border-4 border-slate-300 border-dashed w-full h-full min-h-[400px] text-slate-400">
-               <span className="text-8xl mb-6 opacity-50">🎲</span>
-               <span className="font-bold text-2xl">준비 완료</span>
-            </div>
-          )}
-        </div>
-
-        {/* Control */}
-        <div className="w-full">
-          <Button 
-            onClick={generateRandomMove} 
-            fullWidth
-            className="text-lg py-4 shadow-xl shadow-indigo-200"
-          >
-            가위 바위 보!
-          </Button>
-        </div>
-
-        {/* History Area */}
-        <div className="w-full pt-8 border-t border-slate-200" ref={scrollRef}>
-          <HistoryList history={history} onClear={clearHistory} />
-        </div>
-
-      </main>
-
-      {/* Footer */}
       <footer className="mt-auto pt-10 text-center text-slate-400 text-sm">
-        <p>&copy; {new Date().getFullYear()} Random RPS Generator.</p>
+        <p>&copy; {new Date().getFullYear()} Mini Game Portal. All rights reserved.</p>
       </footer>
     </div>
   );
