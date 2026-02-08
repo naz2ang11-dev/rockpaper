@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Home } from 'lucide-react';
 
 interface Props {
   onBack: () => void;
@@ -218,7 +219,14 @@ export const InitialQuiz: React.FC<Props> = ({ onBack }) => {
 
   // Render Helpers
   const renderIntro = () => (
-    <div className="flex-1 flex flex-col items-center justify-center p-6 animate-fade-in">
+    <div className="flex-1 flex flex-col items-center justify-center p-6 animate-fade-in relative">
+      <button 
+        onClick={onBack}
+        className="absolute top-6 left-6 px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-lg font-bold backdrop-blur-md border border-white/20 shadow-lg hover:scale-105 transition-all flex items-center gap-2"
+      >
+        <Home size={24} /> <span>홈으로</span>
+      </button>
+
       <h1 className="text-5xl md:text-7xl text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-300 to-cyan-300 drop-shadow-lg" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
         자음모음 맞추기 퀴즈
       </h1>
@@ -273,13 +281,6 @@ export const InitialQuiz: React.FC<Props> = ({ onBack }) => {
       > 
         🎮 게임 시작! 
       </button>
-      
-      <button 
-        onClick={onBack}
-        className="mt-6 text-white/60 hover:text-white underline"
-      >
-        뒤로 가기
-      </button>
     </div>
   );
 
@@ -289,9 +290,9 @@ export const InitialQuiz: React.FC<Props> = ({ onBack }) => {
       <div className="flex items-center justify-between px-4 py-4 bg-black/20">
         <button 
           onClick={onBack} 
-          className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold text-lg px-6 py-2 rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg"
+          className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold text-lg px-6 py-2 rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg flex items-center gap-2"
         > 
-          🏠 처음으로 
+          <Home size={20} /> <span>홈으로</span> 
         </button>
       </div>
 

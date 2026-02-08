@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ArrowLeft, Trophy, Minus, RotateCcw, X } from 'lucide-react';
+import { ArrowLeft, Trophy, Minus, RotateCcw, X, Home } from 'lucide-react';
 
 interface Props {
   onBack: () => void;
@@ -101,9 +101,9 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
       <div className={`${fullScreenClass} items-center justify-center p-4 animate-fade-in`}>
         <button 
           onClick={onBack}
-          className="absolute top-6 left-6 text-white/50 hover:text-white transition-colors flex items-center gap-2 z-10 p-2 rounded-lg hover:bg-white/10"
+          className="absolute top-6 left-6 px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-lg font-bold backdrop-blur-md border border-white/20 shadow-lg hover:scale-105 transition-all flex items-center gap-2 z-10"
         >
-           <ArrowLeft size={24} /> <span className="text-lg">나가기</span>
+           <Home size={22} /> <span>홈으로</span>
         </button>
 
         <div className="flex flex-col items-center max-w-4xl w-full">
@@ -184,9 +184,9 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
           </button>
           <button 
             onClick={onBack}
-            className="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 border border-red-500/20"
+            className="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 border border-red-500/20 font-bold"
           >
-            <X size={20} /> <span className="hidden sm:inline">종료</span>
+            <Home size={20} /> <span className="hidden sm:inline">홈으로</span>
           </button>
         </div>
       </div>

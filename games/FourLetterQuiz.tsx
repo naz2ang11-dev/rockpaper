@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Home } from 'lucide-react';
 
 interface Props {
   onBack: () => void;
@@ -224,7 +225,16 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
   // --- Render Components ---
 
   const renderStartScreen = () => (
-    <div className="h-full flex flex-col items-center justify-center p-6 animate-fade-in">
+    <div className="h-full flex flex-col items-center justify-center p-6 animate-fade-in relative">
+       {/* Home Button for Start Screen */}
+       <button 
+          onClick={onBack}
+          className="absolute top-6 left-6 px-6 py-3 rounded-2xl bg-white/20 hover:bg-white/30 text-white text-lg font-bold backdrop-blur-md border border-white/20 shadow-lg hover:scale-105 transition-all flex items-center gap-2 z-20"
+          style={{ fontFamily: '"Jua", sans-serif' }}
+       >
+          <Home size={24} /> <span>홈으로</span>
+       </button>
+
        <div className="text-center">
          <div className="text-8xl mb-4">🎯</div>
          <h1 className="text-5xl md:text-6xl text-white mb-4 drop-shadow-lg" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>네글자 퀴즈</h1>
@@ -400,21 +410,13 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
       <style>{styles}</style>
       <div className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-[#667eea] to-[#764ba2] flex flex-col">
          {/* Home Button (Always visible unless in start screen) */}
-         {screen === 'START' && (
-            <button 
-               onClick={onBack}
-               className="absolute top-6 left-6 text-white/50 hover:text-white underline z-20"
-            >
-               뒤로 가기
-            </button>
-         )}
          {screen !== 'START' && (
             <button 
                onClick={onBack}
-               className="absolute top-6 left-6 text-lg px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-xl shadow-lg z-20"
+               className="absolute top-6 left-6 px-6 py-3 rounded-2xl bg-gray-600 hover:bg-gray-500 text-white text-lg font-bold shadow-lg hover:scale-105 transition-all flex items-center gap-2 z-20"
                style={{ fontFamily: '"Jua", sans-serif' }}
             > 
-               🏠 나가기 
+               <Home size={22} /> <span>홈으로</span> 
             </button>
          )}
 

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Hand, MousePointerClick } from 'lucide-react';
+import { Volume2, VolumeX, Hand, MousePointerClick, Home } from 'lucide-react';
 import { Button } from '../components/Button';
 import { MoveCard } from '../components/MoveCard';
 import { HistoryList } from '../components/HistoryList';
@@ -157,17 +157,18 @@ export const RockPaperScissors: React.FC<Props> = ({ onBack }) => {
       <div className="w-full flex items-center justify-between">
         <button 
           onClick={onBack}
-          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors flex items-center"
+          className="px-5 py-3 text-slate-700 bg-white rounded-2xl shadow-md hover:bg-slate-50 hover:scale-105 transition-all flex items-center gap-2 border border-slate-200"
         >
-          ← 뒤로가기
+          <Home size={22} className="text-indigo-500" /> 
+          <span className="font-bold text-lg">홈으로</span>
         </button>
         <div className="flex items-center gap-2">
            <button
             onClick={() => setIsSoundOn(!isSoundOn)}
-            className={`p-2 rounded-full transition-colors ${isSoundOn ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-400'}`}
+            className={`p-3 rounded-full transition-colors shadow-sm ${isSoundOn ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-200 text-slate-400'}`}
             title={isSoundOn ? "음성 끄기" : "음성 켜기"}
           >
-            {isSoundOn ? <Volume2 size={20} /> : <VolumeX size={20} />}
+            {isSoundOn ? <Volume2 size={24} /> : <VolumeX size={24} />}
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshCw, Volume2, VolumeX, Swords, Shuffle, Repeat, ArrowLeft } from 'lucide-react';
+import { RefreshCw, Volume2, VolumeX, Swords, Shuffle, Repeat, ArrowLeft, Home } from 'lucide-react';
 import { Team, GameMode, TagHistoryItem } from '../types';
 
 interface Props {
@@ -243,9 +243,10 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
        <div className="w-full flex items-center justify-between mb-8">
         <button 
           onClick={onBack}
-          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors flex items-center"
+          className="px-5 py-3 text-slate-700 bg-white rounded-2xl shadow-md hover:bg-slate-50 hover:scale-105 transition-all flex items-center gap-2 border border-slate-200"
         >
-          <ArrowLeft className="w-5 h-5 mr-1" /> 뒤로가기
+          <Home size={22} className="text-green-500" />
+          <span className="font-bold text-lg">홈으로</span>
         </button>
         <span className="text-slate-400">체스 술래잡기</span>
       </div>

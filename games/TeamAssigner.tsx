@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, Users, Save, Trash2, Shuffle, Plus, Settings, X, Loader2, UserMinus, ShieldAlert, CheckCircle2, UserPlus } from 'lucide-react';
+import { ArrowLeft, Users, Save, Trash2, Shuffle, Plus, Settings, X, Loader2, UserMinus, ShieldAlert, CheckCircle2, UserPlus, Home } from 'lucide-react';
 import { Button } from '../components/Button';
 import { db } from '../firebaseConfig';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -324,8 +324,12 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
     <div className="flex flex-col w-full max-w-6xl mx-auto h-full space-y-6 animate-fade-in">
       {/* Top Header */}
       <div className="flex items-center justify-between">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600">
-          <ArrowLeft /> 홈으로
+        <button 
+          onClick={onBack}
+          className="px-5 py-3 text-slate-700 bg-white rounded-2xl shadow-md hover:bg-slate-50 hover:scale-105 transition-all flex items-center gap-2 border border-slate-200"
+        >
+          <Home size={22} className="text-blue-500" />
+          <span className="font-bold text-lg">홈으로</span>
         </button>
         <h1 className="text-3xl text-slate-800" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>팀 랜덤 배정</h1>
         <div className="w-20"></div> {/* Spacer */}
