@@ -8,7 +8,8 @@ import { InitialQuiz } from './games/InitialQuiz';
 import { FourLetterQuiz } from './games/FourLetterQuiz';
 import { BodyTalkQuiz } from './games/BodyTalkQuiz';
 import { RelayTalk } from './games/RelayTalk';
-import { User, Users, PersonStanding, ListOrdered } from 'lucide-react';
+import { PenaltyRoulette } from './games/PenaltyRoulette';
+import { User, Users, PersonStanding, ListOrdered, Dices } from 'lucide-react';
 
 // Custom Icons Components
 const ScoreboardIcon = () => (
@@ -88,6 +89,16 @@ const RelayTalkIcon = () => (
   </div>
 );
 
+const PenaltyRouletteIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center">
+    <div className="w-20 h-20 rounded-full border-4 border-white/50 bg-[conic-gradient(var(--tw-gradient-stops))] from-red-400 via-yellow-400 via-green-400 via-blue-400 to-red-400 shadow-lg animate-[spin_10s_linear_infinite]"></div>
+    <div className="absolute top-0 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[16px] border-t-red-600 drop-shadow-md"></div>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-6 h-6 bg-white rounded-full shadow-inner border border-gray-200"></div>
+    </div>
+  </div>
+);
+
 // 게임 목록 정의
 const GAMES: GameInfo[] = [
   {
@@ -112,11 +123,11 @@ const GAMES: GameInfo[] = [
     color: 'from-yellow-400 to-orange-500'
   },
   {
-    id: 'TAG',
-    title: '체스 술래잡기',
-    description: '두 팀이 번갈아 한 발씩 움직이며, 상대방을 터치해 아웃시키는 게임입니다.',
-    icon: <ChessTagIcon />,
-    color: 'from-green-400 to-emerald-500'
+    id: 'PENALTY_ROULETTE',
+    title: '벌칙 룰렛',
+    description: '복불복 벌칙 정하기! 새로운 벌칙을 추가해보세요',
+    icon: <PenaltyRouletteIcon />,
+    color: 'from-rose-400 to-red-500'
   },
   {
     id: 'INITIAL_QUIZ',
@@ -145,6 +156,13 @@ const GAMES: GameInfo[] = [
     description: '주제가 나오면 5명이 5초 내에 순서대로 정답을 말하는 게임입니다',
     icon: <RelayTalkIcon />,
     color: 'from-pink-400 to-rose-500'
+  },
+  {
+    id: 'TAG',
+    title: '체스 술래잡기',
+    description: '두 팀이 번갈아 한 발씩 움직이며, 상대방을 터치해 아웃시키는 게임입니다.',
+    icon: <ChessTagIcon />,
+    color: 'from-green-400 to-emerald-500'
   }
 ];
 
@@ -170,6 +188,8 @@ const App: React.FC = () => {
         return <TeamAssigner onBack={goHome} />;
       case 'RPS':
         return <RockPaperScissors onBack={goHome} />;
+      case 'PENALTY_ROULETTE':
+        return <PenaltyRoulette onBack={goHome} />;
       case 'TAG':
         return <OneStepTag onBack={goHome} />;
       case 'INITIAL_QUIZ':
@@ -192,7 +212,7 @@ const App: React.FC = () => {
               </p>
             </header>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 mb-16">
               {GAMES.map((game) => (
                 <button
                   key={game.id}
@@ -223,7 +243,7 @@ const App: React.FC = () => {
               ))}
             </div>
             
-            <div className="mt-16 p-6 bg-indigo-50 rounded-2xl border border-indigo-100 text-center max-w-lg">
+            <div className="mt-8 p-6 bg-indigo-50 rounded-2xl border border-indigo-100 text-center max-w-lg mx-auto">
               <p className="text-indigo-800 mb-1">✨ 새로운 도구가 추가될 예정입니다!</p>
               <p className="text-indigo-600 text-sm">선생님들의 편의를 위해 계속 업데이트 됩니다.</p>
             </div>
@@ -239,7 +259,7 @@ const App: React.FC = () => {
       {renderContent()}
 
       {currentGame === 'HOME' && (
-        <footer className="mt-auto pt-10 text-center text-slate-400 text-sm">
+        <footer className="mt-auto pt-10 text-center text-slate-400 text-sm pb-8">
           <p>&copy; {new Date().getFullYear()} Class Play Tools. All rights reserved.</p>
         </footer>
       )}
