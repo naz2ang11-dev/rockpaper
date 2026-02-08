@@ -81,7 +81,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
   const [isShuffling, setIsShuffling] = useState(false);
   const [isLoadingFire, setIsLoadingFire] = useState(false);
 
-  const DOC_ID = 'my_classroom_v3'; // Increment version for new schema
+  // CRITICAL: Keep this ID same as before to ensure data persistence
+  const DOC_ID = 'my_classroom_v3'; 
 
   // Sorted Students (Ga-Na-Da)
   const sortedStudents = useMemo(() => {
@@ -105,7 +106,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
             return;
           }
         }
-        // Fallback LocalStorage
+        // Fallback LocalStorage (CRITICAL: Keep same key)
         const saved = localStorage.getItem('team_data_v3');
         if (saved) {
           const parsed = JSON.parse(saved);
@@ -323,10 +324,10 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
     <div className="flex flex-col w-full max-w-6xl mx-auto h-full space-y-6 animate-fade-in">
       {/* Top Header */}
       <div className="flex items-center justify-between">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 font-bold hover:text-indigo-600">
+        <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600">
           <ArrowLeft /> 홈으로
         </button>
-        <h1 className="text-2xl font-black text-slate-800">팀 랜덤 배정</h1>
+        <h1 className="text-3xl text-slate-800" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>팀 랜덤 배정</h1>
         <div className="w-20"></div> {/* Spacer */}
       </div>
 
@@ -335,10 +336,10 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
         {/* Left: Absentee Selection (Grid) */}
         <div className="flex-1 bg-white rounded-3xl border border-slate-200 shadow-sm p-6 flex flex-col">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold flex items-center gap-2 text-slate-700">
+            <h2 className="text-xl flex items-center gap-2 text-slate-700">
               <UserMinus className="text-orange-500" /> 결석생 선택
             </h2>
-            <span className="text-sm text-slate-400 font-bold">
+            <span className="text-sm text-slate-400">
               총 {students.length}명 / 출석 {students.length - absenteeIds.size}명
             </span>
           </div>
@@ -360,7 +361,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                       key={s.id}
                       onClick={() => toggleAbsentee(s.id)}
                       className={`
-                        relative py-3 px-1 rounded-xl border-2 font-bold transition-all text-sm sm:text-base
+                        relative py-3 px-1 rounded-xl border-2 transition-all text-sm sm:text-base
                         ${isAbsent 
                           ? 'bg-slate-100 border-slate-200 text-slate-300 grayscale' 
                           : isMale 
@@ -382,7 +383,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
         {/* Right: Mode & Start */}
         <div className="w-full md:w-96 flex flex-col gap-4">
           <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xl font-bold flex items-center gap-2 text-slate-700 mb-4">
+            <h2 className="text-xl flex items-center gap-2 text-slate-700 mb-4">
               <Shuffle className="text-indigo-500" /> 팀 모드 선택
             </h2>
             <div className="flex gap-3 h-28">
@@ -396,7 +397,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                    <div className="w-4 h-4 rounded-full bg-red-500"/>
                    <div className="w-4 h-4 rounded-full bg-blue-500"/>
                 </div>
-                <span className="font-black text-xl">2팀</span>
+                <span className="text-xl">2팀</span>
               </button>
               <button 
                 onClick={() => setSelectedMode('4TEAM')}
@@ -410,14 +411,14 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                    <div className="w-3 h-3 rounded-full bg-green-500"/>
                    <div className="w-3 h-3 rounded-full bg-slate-300"/>
                 </div>
-                <span className="font-black text-xl">4팀</span>
+                <span className="text-xl">4팀</span>
               </button>
             </div>
           </div>
 
           <Button 
             onClick={shuffleAndAssign} 
-            className="w-full text-xl font-bold shadow-xl shadow-indigo-200 py-4 h-auto"
+            className="w-full text-xl shadow-xl shadow-indigo-200 py-4 h-auto"
             disabled={students.length < 2}
           >
             🎲 팀 배정 시작
@@ -425,7 +426,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
 
           <button 
             onClick={() => setView('SETTINGS')}
-            className="w-full py-4 bg-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-300 transition-colors flex items-center justify-center gap-2"
+            className="w-full py-4 bg-slate-200 text-slate-600 rounded-2xl hover:bg-slate-300 transition-colors flex items-center justify-center gap-2"
           >
             <Settings size={20} /> 학생 관리 및 조건 설정
           </button>
@@ -439,10 +440,10 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
     <div className="flex flex-col w-full max-w-5xl mx-auto h-full animate-fade-in bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden my-4">
       {/* Header */}
       <div className="bg-slate-50 p-4 border-b border-slate-200 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-slate-700 flex items-center gap-2">
+        <h2 className="text-xl text-slate-700 flex items-center gap-2">
           <Settings className="text-slate-500" /> 설정
         </h2>
-        <button onClick={() => setView('MAIN')} className="bg-white border px-4 py-2 rounded-lg font-bold hover:bg-slate-100">
+        <button onClick={() => setView('MAIN')} className="bg-white border px-4 py-2 rounded-lg hover:bg-slate-100">
            저장 후 닫기
         </button>
       </div>
@@ -451,13 +452,13 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
       <div className="flex border-b border-slate-200">
         <button 
           onClick={() => setSettingsTab('STUDENTS')}
-          className={`flex-1 py-4 font-bold text-lg transition-colors ${settingsTab === 'STUDENTS' ? 'bg-white text-indigo-600 border-b-2 border-indigo-600' : 'bg-slate-50 text-slate-400'}`}
+          className={`flex-1 py-4 text-lg transition-colors ${settingsTab === 'STUDENTS' ? 'bg-white text-indigo-600 border-b-2 border-indigo-600' : 'bg-slate-50 text-slate-400'}`}
         >
           👨‍🎓 학생 명단 관리
         </button>
         <button 
           onClick={() => setSettingsTab('CONDITIONS')}
-          className={`flex-1 py-4 font-bold text-lg transition-colors ${settingsTab === 'CONDITIONS' ? 'bg-white text-indigo-600 border-b-2 border-indigo-600' : 'bg-slate-50 text-slate-400'}`}
+          className={`flex-1 py-4 text-lg transition-colors ${settingsTab === 'CONDITIONS' ? 'bg-white text-indigo-600 border-b-2 border-indigo-600' : 'bg-slate-50 text-slate-400'}`}
         >
           ⚠️ 같은 팀 금지 조건
         </button>
@@ -469,7 +470,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
              {/* Add Form */}
              <div className="flex gap-3 items-end bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <div className="flex-1">
-                  <label className="text-xs font-bold text-slate-400 ml-1">이름 입력</label>
+                  <label className="text-xs text-slate-400 ml-1">이름 입력</label>
                   <input
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
@@ -479,8 +480,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                   />
                 </div>
                 <div className="flex bg-white p-1 rounded-lg border border-slate-200">
-                   <button onClick={() => setInputGender('MALE')} className={`px-4 py-2 rounded font-bold ${inputGender === 'MALE' ? 'bg-blue-100 text-blue-700' : 'text-slate-300'}`}>남학생</button>
-                   <button onClick={() => setInputGender('FEMALE')} className={`px-4 py-2 rounded font-bold ${inputGender === 'FEMALE' ? 'bg-pink-100 text-pink-700' : 'text-slate-300'}`}>여학생</button>
+                   <button onClick={() => setInputGender('MALE')} className={`px-4 py-2 rounded ${inputGender === 'MALE' ? 'bg-blue-100 text-blue-700' : 'text-slate-300'}`}>남학생</button>
+                   <button onClick={() => setInputGender('FEMALE')} className={`px-4 py-2 rounded ${inputGender === 'FEMALE' ? 'bg-pink-100 text-pink-700' : 'text-slate-300'}`}>여학생</button>
                 </div>
                 <Button onClick={addStudent} className="py-3 px-6 h-[54px]"><Plus size={24} /></Button>
              </div>
@@ -489,7 +490,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                {sortedStudents.map(s => (
                  <div key={s.id} className={`flex items-center justify-between p-3 rounded-lg border ${s.gender === 'MALE' ? 'bg-blue-50 border-blue-100' : 'bg-pink-50 border-pink-100'}`}>
-                    <span className={`font-bold ${s.gender === 'MALE' ? 'text-blue-900' : 'text-pink-900'}`}>{s.name}</span>
+                    <span className={`${s.gender === 'MALE' ? 'text-blue-900' : 'text-pink-900'}`}>{s.name}</span>
                     <button onClick={() => removeStudent(s.id)} className="text-slate-400 hover:text-red-500 p-1"><Trash2 size={16}/></button>
                  </div>
                ))}
@@ -500,7 +501,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
           <div className="flex flex-col gap-8">
              {/* 2 Team Conditions */}
              <div className="bg-red-50 rounded-2xl p-6 border border-red-100">
-                <h3 className="font-bold text-red-700 flex items-center gap-2 text-lg mb-2"><ShieldAlert /> 2팀 모드 조건 (같은 팀 금지)</h3>
+                <h3 className="text-red-700 flex items-center gap-2 text-lg mb-2"><ShieldAlert /> 2팀 모드 조건 (같은 팀 금지)</h3>
                 <p className="text-sm text-red-400 mb-4">선택한 2명은 서로 다른 팀(빨강 vs 파랑)으로 배정됩니다.</p>
                 
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -508,7 +509,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                      const s1 = students.find(s => s.id === cond.studentIds[0]);
                      const s2 = students.find(s => s.id === cond.studentIds[1]);
                      return (
-                       <div key={cond.id} className="bg-white px-3 py-1 rounded-full border border-red-200 text-red-600 font-bold text-sm flex items-center gap-2 shadow-sm">
+                       <div key={cond.id} className="bg-white px-3 py-1 rounded-full border border-red-200 text-red-600 text-sm flex items-center gap-2 shadow-sm">
                          {s1?.name} <span className="text-xs text-red-300">⚡</span> {s2?.name}
                          <button onClick={() => updateConditions(pairConditions.filter(c => c.id !== cond.id), groupConditions)}><X size={14}/></button>
                        </div>
@@ -519,9 +520,9 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                 {/* Picker */}
                 <div className="bg-white p-4 rounded-xl border border-red-100">
                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-bold text-sm text-slate-500">2명을 선택하세요 ({tempPairSelection.length}/2)</span>
+                      <span className="text-sm text-slate-500">2명을 선택하세요 ({tempPairSelection.length}/2)</span>
                       {tempPairSelection.length === 2 && (
-                        <button onClick={addPairCondition} className="bg-red-500 text-white px-4 py-1 rounded-lg text-sm font-bold shadow-sm hover:bg-red-600">조건 추가</button>
+                        <button onClick={addPairCondition} className="bg-red-500 text-white px-4 py-1 rounded-lg text-sm shadow-sm hover:bg-red-600">조건 추가</button>
                       )}
                    </div>
                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
@@ -540,12 +541,12 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
 
              {/* 4 Team Conditions */}
              <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
-                <h3 className="font-bold text-green-700 flex items-center gap-2 text-lg mb-2"><CheckCircle2 /> 4팀 모드 조건 (분산 배정)</h3>
+                <h3 className="text-green-700 flex items-center gap-2 text-lg mb-2"><CheckCircle2 /> 4팀 모드 조건 (분산 배정)</h3>
                 <p className="text-sm text-green-600 mb-4">선택한 4명은 서로 다른 4개의 팀으로 흩어집니다.</p>
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {groupConditions.map(cond => (
-                       <div key={cond.id} className="bg-white px-3 py-1 rounded-full border border-green-200 text-green-600 font-bold text-sm flex items-center gap-2 shadow-sm">
+                       <div key={cond.id} className="bg-white px-3 py-1 rounded-full border border-green-200 text-green-600 text-sm flex items-center gap-2 shadow-sm">
                          {cond.studentIds.map(id => students.find(s => s.id === id)?.name).join(', ')}
                          <button onClick={() => updateConditions(pairConditions, groupConditions.filter(c => c.id !== cond.id))}><X size={14}/></button>
                        </div>
@@ -554,9 +555,9 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
 
                 <div className="bg-white p-4 rounded-xl border border-green-100">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-bold text-sm text-slate-500">4명을 선택하세요 ({tempGroupSelection.length}/4)</span>
+                      <span className="text-sm text-slate-500">4명을 선택하세요 ({tempGroupSelection.length}/4)</span>
                       {tempGroupSelection.length === 4 && (
-                        <button onClick={addGroupCondition} className="bg-green-500 text-white px-4 py-1 rounded-lg text-sm font-bold shadow-sm hover:bg-green-600">조건 추가</button>
+                        <button onClick={addGroupCondition} className="bg-green-500 text-white px-4 py-1 rounded-lg text-sm shadow-sm hover:bg-green-600">조건 추가</button>
                       )}
                    </div>
                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
@@ -584,7 +585,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
        return (
          <div className="flex flex-col items-center justify-center h-[80vh]">
             <Loader2 className="w-32 h-32 text-indigo-500 animate-spin mb-8" />
-            <h2 className="text-4xl font-black text-slate-700 animate-pulse">팀을 섞고 있습니다...</h2>
+            <h2 className="text-5xl text-slate-700 animate-pulse" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>팀을 섞고 있습니다...</h2>
          </div>
        );
     }
@@ -592,7 +593,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
     return (
       <div className="w-full h-full flex flex-col p-4 animate-fade-in">
          <div className="text-center mb-6">
-            <h2 className="text-4xl font-black text-indigo-900 drop-shadow-sm">
+            <h2 className="text-5xl text-indigo-900 drop-shadow-sm" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                🎉 팀 배정 결과
             </h2>
          </div>
@@ -610,8 +611,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
               return (
                 <div key={idx} className={`${containerStyle} rounded-3xl p-6 shadow-xl flex flex-col overflow-hidden`}>
                    <div className="flex justify-between items-center mb-6 border-b border-black/10 pb-4">
-                      <h3 className={`text-5xl font-black ${config.text} drop-shadow-sm`}>{config.name}</h3>
-                      <span className="text-2xl font-bold opacity-60 bg-white/30 px-4 py-1 rounded-full">{members.length}명</span>
+                      <h3 className={`text-6xl ${config.text} drop-shadow-sm`} style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{config.name}</h3>
+                      <span className="text-3xl opacity-60 bg-white/30 px-4 py-1 rounded-full">{members.length}명</span>
                    </div>
                    <div className="flex-1 content-start overflow-y-auto grid grid-cols-1 xl:grid-cols-2 gap-3 pr-2 custom-scrollbar">
                       {members.map(m => (
@@ -621,7 +622,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                          `}>
                             {/* Gender Indicator Dot */}
                             <div className={`w-6 h-6 rounded-full ${m.gender === 'MALE' ? 'bg-blue-500' : 'bg-pink-500'}`} />
-                            <span className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight">{m.name}</span>
+                            <span className="text-6xl md:text-7xl lg:text-8xl tracking-tight leading-tight" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{m.name}</span>
                          </div>
                       ))}
                    </div>
@@ -636,7 +637,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
             </Button>
             <button 
                onClick={() => setView('MAIN')}
-               className="bg-slate-800 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-900 transition-colors text-xl"
+               className="bg-slate-800 text-white px-10 py-4 rounded-xl hover:bg-slate-900 transition-colors text-xl"
             >
                닫기
             </button>

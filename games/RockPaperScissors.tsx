@@ -157,7 +157,7 @@ export const RockPaperScissors: React.FC<Props> = ({ onBack }) => {
       <div className="w-full flex items-center justify-between">
         <button 
           onClick={onBack}
-          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors font-bold flex items-center"
+          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors flex items-center"
         >
           ← 뒤로가기
         </button>
@@ -176,13 +176,13 @@ export const RockPaperScissors: React.FC<Props> = ({ onBack }) => {
       <div className="flex bg-slate-200 p-1 rounded-xl w-full">
         <button 
           onClick={() => { setMode('RANDOM'); setCurrentMove(null); }}
-          className={`flex-1 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${mode === 'RANDOM' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          className={`flex-1 py-2 rounded-lg text-sm flex items-center justify-center gap-2 transition-all ${mode === 'RANDOM' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
         >
           <Hand size={16} /> 랜덤 뽑기
         </button>
         <button 
           onClick={() => { setMode('MANUAL'); setCurrentMove(null); }}
-          className={`flex-1 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${mode === 'MANUAL' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          className={`flex-1 py-2 rounded-lg text-sm flex items-center justify-center gap-2 transition-all ${mode === 'MANUAL' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
         >
           <MousePointerClick size={16} /> 직접 선택
         </button>
@@ -197,7 +197,7 @@ export const RockPaperScissors: React.FC<Props> = ({ onBack }) => {
              {!isLoading && (
                <>
                  <span className="text-8xl mb-6 opacity-50">🎲</span>
-                 <p className="font-bold text-2xl mb-2">
+                 <p className="text-2xl mb-2">
                    {mode === 'RANDOM' ? '버튼을 눌러주세요' : '낼 것을 선택하세요'}
                  </p>
                  <p className="text-sm">
@@ -232,7 +232,7 @@ export const RockPaperScissors: React.FC<Props> = ({ onBack }) => {
                 `}
               >
                 <span className="text-3xl mb-1">{MOVES[move].emoji}</span>
-                <span className={`font-bold text-sm ${MOVES[move].color}`}>{MOVES[move].label}</span>
+                <span className={`text-sm ${MOVES[move].color}`}>{MOVES[move].label}</span>
               </button>
             ))}
           </div>

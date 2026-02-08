@@ -13,7 +13,7 @@ export const MoveCard: React.FC<MoveCardProps> = ({ config, isMain = false }) =>
         <div className="text-[13rem] mb-6 filter drop-shadow-md transform transition-transform hover:scale-110 duration-300 leading-none">
           {config.emoji}
         </div>
-        <h2 className={`text-5xl font-black ${config.color} tracking-tight`}>
+        <h2 className={`text-5xl ${config.color} tracking-tight`}>
           {config.label}
         </h2>
       </div>
@@ -24,7 +24,7 @@ export const MoveCard: React.FC<MoveCardProps> = ({ config, isMain = false }) =>
     <div className={`flex items-center p-3 rounded-lg bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow`}>
       <span className="text-3xl mr-3">{config.emoji}</span>
       <div className="flex flex-col">
-        <span className={`font-bold ${config.color}`}>{config.label}</span>
+        <span className={`${config.color}`}>{config.label}</span>
       </div>
     </div>
   );

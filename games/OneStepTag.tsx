@@ -65,7 +65,7 @@ const GameCard = ({ team, isActive, isAnimating }: { team: 'RED' | 'BLUE'; isAct
           backdrop-blur-sm border-2 border-white/20 shadow-sm
         `}>
           <FootprintsIcon className="w-4 h-4 md:w-6 md:h-6" />
-          <span className="font-bold text-sm md:text-xl whitespace-nowrap">한 걸음 전진!</span>
+          <span className="text-sm md:text-xl whitespace-nowrap">한 걸음 전진!</span>
         </div>
       )}
     </div>
@@ -77,7 +77,7 @@ const HistoryLog = ({ history }: { history: TagHistoryItem[] }) => {
 
   return (
     <div className="w-full flex flex-col items-center space-y-4 mt-8">
-      <span className="text-gray-500 font-semibold text-sm">이전 순서 (최신순)</span>
+      <span className="text-gray-500 text-sm">이전 순서 (최신순)</span>
       
       {history.length === 0 ? (
         <div className="h-10 text-gray-400 text-sm flex items-center">기록이 없습니다</div>
@@ -87,7 +87,7 @@ const HistoryLog = ({ history }: { history: TagHistoryItem[] }) => {
             <div
               key={item.id}
               className={`
-                w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-md transition-all
+                w-10 h-10 rounded-full flex items-center justify-center text-white text-xs shadow-md transition-all
                 ${item.team === 'RED' ? 'bg-red-500' : 'bg-blue-500'}
                 ${index === 0 ? 'scale-110 ring-2 ring-offset-2 ring-gray-300' : 'opacity-80'}
               `}
@@ -243,11 +243,11 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
        <div className="w-full flex items-center justify-between mb-8">
         <button 
           onClick={onBack}
-          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors font-bold flex items-center"
+          className="px-4 py-2 text-slate-600 bg-white rounded-lg shadow-sm hover:bg-slate-50 transition-colors flex items-center"
         >
           <ArrowLeft className="w-5 h-5 mr-1" /> 뒤로가기
         </button>
-        <span className="font-bold text-slate-400">체스 술래잡기</span>
+        <span className="text-slate-400">체스 술래잡기</span>
       </div>
 
       {/* Main Game Area */}
@@ -274,14 +274,14 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
           />
           <button 
             onClick={() => { if(isSoundOn) playClickSound(); setMode(GameMode.SEQUENTIAL); }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold z-10 transition-colors ${mode === GameMode.SEQUENTIAL ? 'text-blue-600' : 'text-gray-400'}`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm z-10 transition-colors ${mode === GameMode.SEQUENTIAL ? 'text-blue-600' : 'text-gray-400'}`}
           >
             <Repeat className="w-4 h-4" />
             순서대로
           </button>
           <button 
             onClick={() => { if(isSoundOn) playClickSound(); setMode(GameMode.RANDOM); }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold z-10 transition-colors ${mode === GameMode.RANDOM ? 'text-blue-600' : 'text-gray-400'}`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm z-10 transition-colors ${mode === GameMode.RANDOM ? 'text-blue-600' : 'text-gray-400'}`}
           >
             <Shuffle className="w-4 h-4" />
             랜덤
@@ -303,7 +303,7 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
         >
           <div className="relative z-10 flex items-center justify-center gap-3">
             <Swords className={`w-8 h-8 ${isAnimating ? 'animate-spin' : ''}`} />
-            <span className="text-3xl font-black font-jua tracking-wide">공격!</span>
+            <span className="text-3xl font-jua tracking-wide">공격!</span>
           </div>
           {/* Shine effect */}
           <div className="absolute top-0 -left-full w-full h-full bg-white/20 skew-x-[-20deg] group-hover:animate-[shimmer_1s_infinite]" />
@@ -313,7 +313,7 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
         <div className="flex gap-3">
           <button
             onClick={() => { playClickSound(); setIsSoundOn(!isSoundOn); }}
-            className={`flex-1 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-colors ${isSoundOn ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-400'}`}
+            className={`flex-1 py-3 rounded-xl flex items-center justify-center gap-2 transition-colors ${isSoundOn ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-400'}`}
           >
             {isSoundOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
             {isSoundOn ? '음성 켜짐' : '음성 꺼짐'}

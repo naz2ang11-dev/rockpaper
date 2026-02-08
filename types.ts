@@ -1,4 +1,6 @@
 
+import { ReactNode } from 'react';
+
 export type MoveType = 'SCISSORS' | 'ROCK' | 'PAPER';
 
 export interface MoveConfig {
@@ -30,13 +32,13 @@ export interface TagHistoryItem {
   turnNumber: number;
 }
 
-export type GameId = 'HOME' | 'RPS' | 'TAG' | 'SCOREBOARD' | 'TEAM_MATCH';
+export type GameId = 'HOME' | 'RPS' | 'TAG' | 'SCOREBOARD' | 'TEAM_MATCH' | 'INITIAL_QUIZ' | 'FOUR_LETTER_QUIZ';
 
 export interface GameInfo {
   id: GameId;
   title: string;
   description: string;
-  emoji: string;
+  icon: ReactNode;
   color: string;
 }
 

@@ -103,16 +103,16 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
           onClick={onBack}
           className="absolute top-6 left-6 text-white/50 hover:text-white transition-colors flex items-center gap-2 z-10 p-2 rounded-lg hover:bg-white/10"
         >
-           <ArrowLeft size={24} /> <span className="font-bold text-lg">나가기</span>
+           <ArrowLeft size={24} /> <span className="text-lg">나가기</span>
         </button>
 
         <div className="flex flex-col items-center max-w-4xl w-full">
-          <h1 className="text-6xl md:text-8xl text-white mb-16 font-black tracking-wider drop-shadow-2xl" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
+          <h1 className="text-7xl md:text-9xl text-white mb-16 tracking-wider drop-shadow-2xl" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
             점수판
           </h1>
           
           <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 w-full max-w-2xl border border-white/20 shadow-2xl">
-            <label className="block text-white/90 text-2xl font-bold mb-8 flex items-center gap-3">
+            <label className="block text-white/90 text-2xl mb-8 flex items-center gap-3">
               <Trophy className="text-yellow-400 w-8 h-8" /> 
               <span className="drop-shadow-md">팀 수 선택</span>
             </label>
@@ -123,7 +123,7 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
                   key={num}
                   onClick={() => setSelectedTeams(num)}
                   className={`
-                    py-6 rounded-2xl font-black text-2xl transition-all duration-200 border-2
+                    py-6 rounded-2xl text-2xl transition-all duration-200 border-2
                     ${selectedTeams === num 
                       ? 'bg-emerald-500 text-white border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.6)] scale-105 transform -translate-y-1' 
                       : 'bg-white/5 border-transparent text-slate-400 hover:bg-white/10 hover:text-white hover:border-white/20'}
@@ -138,7 +138,7 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
               onClick={handleStart}
               disabled={selectedTeams === 0}
               className={`
-                w-full py-6 rounded-2xl font-black text-3xl transition-all duration-300 transform shadow-xl
+                w-full py-6 rounded-2xl text-3xl transition-all duration-300 transform shadow-xl
                 ${selectedTeams > 0 
                   ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:scale-[1.02] hover:shadow-emerald-500/40 hover:from-emerald-400 hover:to-teal-400' 
                   : 'bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700'}
@@ -178,13 +178,13 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
         <div className="flex gap-3">
           <button 
             onClick={() => setStep('SETUP')}
-            className="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 border border-white/10"
+            className="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 border border-white/10"
           >
             <RotateCcw size={18} /> <span className="hidden sm:inline">다시하기</span>
           </button>
           <button 
             onClick={onBack}
-            className="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 border border-red-500/20"
+            className="bg-red-500/20 hover:bg-red-500/40 text-red-100 px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 border border-red-500/20"
           >
             <X size={20} /> <span className="hidden sm:inline">종료</span>
           </button>
@@ -211,7 +211,7 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
             >
                {/* Team Name Label */}
                <div className="absolute top-4 left-0 right-0 flex justify-center pointer-events-none">
-                  <span className="bg-black/20 text-white/90 px-4 py-1 rounded-full font-bold text-lg md:text-xl backdrop-blur-sm shadow-sm">
+                  <span className="bg-black/20 text-white/90 px-4 py-1 rounded-full text-lg md:text-xl backdrop-blur-sm shadow-sm">
                     {color.name}
                   </span>
                </div>
@@ -231,15 +231,15 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
                    onClick={() => updateSet(i, 1)}
                    className="bg-black/20 hover:bg-black/40 text-white px-6 py-2 rounded-2xl flex flex-col items-center min-w-[5.5rem] cursor-pointer transition-colors active:scale-95 backdrop-blur-sm"
                  >
-                   <span className="text-4xl font-bold leading-none drop-shadow-md">{sets[i]}</span>
-                   <span className="text-xs uppercase font-bold tracking-wider opacity-80 mt-1">Set</span>
+                   <span className="text-4xl leading-none drop-shadow-md">{sets[i]}</span>
+                   <span className="text-xs uppercase tracking-wider opacity-80 mt-1">Set</span>
                  </div>
                </div>
 
                {/* Main Score Display */}
                <div className="flex-1 flex items-center justify-center w-full h-full pointer-events-none p-4">
                  <div 
-                   className="font-black text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] leading-none select-none transition-all duration-100" 
+                   className="text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] leading-none select-none transition-all duration-100" 
                    style={{ 
                      fontFamily: '"Black Han Sans", sans-serif',
                      fontSize: getFontSize(scores[i]),
@@ -257,13 +257,13 @@ export const Scoreboard: React.FC<Props> = ({ onBack }) => {
                >
                  <button 
                    onClick={() => updateScore(i, -1)}
-                   className="bg-black/30 hover:bg-black/50 text-white px-6 py-3 rounded-xl font-bold text-xl backdrop-blur-md shadow-lg transition-transform hover:scale-105 active:scale-95 border border-white/10"
+                   className="bg-black/30 hover:bg-black/50 text-white px-6 py-3 rounded-xl text-xl backdrop-blur-md shadow-lg transition-transform hover:scale-105 active:scale-95 border border-white/10"
                  >
                    -1
                  </button>
                  <button 
                    onClick={() => resetScore(i)}
-                   className="bg-black/30 hover:bg-black/50 text-white px-6 py-3 rounded-xl font-bold text-xl backdrop-blur-md shadow-lg transition-transform hover:scale-105 active:scale-95 border border-white/10"
+                   className="bg-black/30 hover:bg-black/50 text-white px-6 py-3 rounded-xl text-xl backdrop-blur-md shadow-lg transition-transform hover:scale-105 active:scale-95 border border-white/10"
                  >
                    0
                  </button>

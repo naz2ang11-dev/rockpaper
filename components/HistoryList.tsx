@@ -20,12 +20,12 @@ export const HistoryList: React.FC<HistoryListProps> = ({ history, onClear }) =>
   return (
     <div className="w-full max-w-md mx-auto mt-8">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-slate-700 flex items-center">
+        <h3 className="text-lg text-slate-700 flex items-center">
           <span className="mr-2">📜</span> 히스토리 ({history.length})
         </h3>
         <button 
           onClick={onClear}
-          className="text-xs text-slate-400 hover:text-red-500 font-medium px-2 py-1 rounded hover:bg-red-50 transition-colors"
+          className="text-xs text-slate-400 hover:text-red-500 px-2 py-1 rounded hover:bg-red-50 transition-colors"
         >
           기록 지우기
         </button>
@@ -38,7 +38,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({ history, onClear }) =>
                 <div className="flex items-center space-x-4">
                   <span className="text-4xl">{MOVES[item.move].emoji}</span>
                   <div>
-                    <p className={`font-bold text-lg ${MOVES[item.move].color}`}>
+                    <p className={`text-lg ${MOVES[item.move].color}`}>
                       {MOVES[item.move].label}
                     </p>
                     <p className="text-xs text-slate-400">
