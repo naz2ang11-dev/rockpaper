@@ -1,5 +1,5 @@
 {
-  "name": "랜덤 가위바위보",
-  "description": "버튼을 누르면 가위, 바위, 보 중 하나가 랜덤으로 나오는 웹 애플리케이션입니다.",
+  "name": "교실놀이 도우미",
+  "description": "여러가지 교실놀이를 도와주는 도구 모음",
   "requestFramePermissions": []
 }

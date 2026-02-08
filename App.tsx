@@ -3,6 +3,7 @@ import { GameId, GameInfo } from './types';
 import { RockPaperScissors } from './games/RockPaperScissors';
 import { OneStepTag } from './games/OneStepTag';
 import { Scoreboard } from './games/Scoreboard';
+import { TeamAssigner } from './games/TeamAssigner';
 
 // 게임 목록 정의
 const GAMES: GameInfo[] = [
@@ -12,6 +13,13 @@ const GAMES: GameInfo[] = [
     description: '교실놀이나 체육시간에 활용하세요',
     emoji: '🏆',
     color: 'from-emerald-400 to-teal-500'
+  },
+  {
+    id: 'TEAM_MATCH',
+    title: '팀 랜덤 배정',
+    description: '교실놀이때 팀 짤때 활용하세요',
+    emoji: '👥',
+    color: 'from-blue-400 to-indigo-500'
   },
   {
     id: 'RPS',
@@ -47,6 +55,8 @@ const App: React.FC = () => {
     switch (currentGame) {
       case 'SCOREBOARD':
         return <Scoreboard onBack={goHome} />;
+      case 'TEAM_MATCH':
+        return <TeamAssigner onBack={goHome} />;
       case 'RPS':
         return <RockPaperScissors onBack={goHome} />;
       case 'TAG':
