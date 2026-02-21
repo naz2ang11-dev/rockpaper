@@ -9,7 +9,10 @@ import { FourLetterQuiz } from './games/FourLetterQuiz';
 import { BodyTalkQuiz } from './games/BodyTalkQuiz';
 import { RelayTalk } from './games/RelayTalk';
 import { PenaltyRoulette } from './games/PenaltyRoulette';
-import { User, Users, PersonStanding, ListOrdered, Dices } from 'lucide-react';
+import { SpeedQuiz } from './games/SpeedQuiz';
+import { MissionFactory } from './games/MissionFactory';
+import { LuckyCorner } from './games/LuckyCorner';
+import { User, Users, PersonStanding, ListOrdered, Dices, Mic, Timer, Factory, CheckCircle2, Bomb } from 'lucide-react';
 
 // Custom Icons Components
 const ScoreboardIcon = () => (
@@ -99,6 +102,32 @@ const PenaltyRouletteIcon = () => (
   </div>
 );
 
+const SpeedQuizIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl shadow-lg transform -rotate-1 border-4 border-white/20">
+     <Mic size={56} className="text-white drop-shadow-md" strokeWidth={2.5} />
+     <div className="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 rounded-full p-1 shadow-md">
+       <Timer size={20} />
+     </div>
+  </div>
+);
+
+const MissionFactoryIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg transform rotate-2 border-4 border-white/20">
+     <Factory size={56} className="text-white drop-shadow-md" strokeWidth={2} />
+     <div className="absolute -bottom-2 -right-2 bg-green-400 text-green-900 rounded-full p-1 shadow-md animate-pulse">
+       <CheckCircle2 size={24} />
+     </div>
+  </div>
+);
+
+const LuckyCornerIcon = () => (
+  <div className="relative w-24 h-24 flex items-center justify-center bg-black rounded-2xl shadow-lg border-4 border-red-500 overflow-hidden group">
+     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900 via-black to-black opacity-80"></div>
+     <Bomb size={56} className="text-red-500 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)] animate-pulse relative z-10" strokeWidth={2} />
+     <div className="absolute top-1 right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+  </div>
+);
+
 // 게임 목록 정의
 const GAMES: GameInfo[] = [
   {
@@ -151,6 +180,27 @@ const GAMES: GameInfo[] = [
     color: 'from-orange-400 to-red-500'
   },
   {
+    id: 'SPEED_QUIZ',
+    title: '스피드 퀴즈',
+    description: '말을 할 수 있는 스피드 퀴즈! 난이도별 핸디캡이 적용됩니다',
+    icon: <SpeedQuizIcon />,
+    color: 'from-cyan-400 to-blue-500'
+  },
+  {
+    id: 'MISSION_FACTORY',
+    title: '미션 팩토리',
+    description: '스피드와 퀄리티 미션을 수행하며 승리를 쟁취하세요!',
+    icon: <MissionFactoryIcon />,
+    color: 'from-indigo-500 to-purple-600'
+  },
+  {
+    id: 'LUCKY_CORNER',
+    title: '나의 행운은?',
+    description: '운명의 구석을 선택하고 끝까지 살아남으세요!',
+    icon: <LuckyCornerIcon />,
+    color: 'from-slate-800 to-black border border-red-900'
+  },
+  {
     id: 'RELAY_TALK',
     title: '줄줄이 말해요',
     description: '주제가 나오면 5명이 5초 내에 순서대로 정답을 말하는 게임입니다',
@@ -198,6 +248,12 @@ const App: React.FC = () => {
         return <FourLetterQuiz onBack={goHome} />;
       case 'BODY_TALK':
         return <BodyTalkQuiz onBack={goHome} />;
+      case 'SPEED_QUIZ':
+        return <SpeedQuiz onBack={goHome} />;
+      case 'MISSION_FACTORY':
+        return <MissionFactory onBack={goHome} />;
+      case 'LUCKY_CORNER':
+        return <LuckyCorner onBack={goHome} />;
       case 'RELAY_TALK':
         return <RelayTalk onBack={goHome} />;
       default:
@@ -252,7 +308,7 @@ const App: React.FC = () => {
     }
   };
 
-  const isFullScreenGame = currentGame === 'INITIAL_QUIZ' || currentGame === 'FOUR_LETTER_QUIZ' || currentGame === 'BODY_TALK' || currentGame === 'RELAY_TALK';
+  const isFullScreenGame = currentGame === 'INITIAL_QUIZ' || currentGame === 'FOUR_LETTER_QUIZ' || currentGame === 'BODY_TALK' || currentGame === 'RELAY_TALK' || currentGame === 'SPEED_QUIZ' || currentGame === 'MISSION_FACTORY' || currentGame === 'LUCKY_CORNER';
 
   return (
     <div className={`min-h-screen bg-slate-50 flex flex-col items-center ${isFullScreenGame ? 'p-0' : 'py-10 px-4'}`}>

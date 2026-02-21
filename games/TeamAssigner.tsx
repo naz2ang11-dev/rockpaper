@@ -55,6 +55,15 @@ const TEAM_CONFIGS: Record<TeamMode, TeamConfig[]> = {
   ]
 };
 
+const shuffle = <T,>(arr: T[]) => {
+  const newArr = [...arr];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+};
+
 export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
   // --- State ---
   const [view, setView] = useState<ViewState>('MAIN');
@@ -251,15 +260,6 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
       
       const buckets: Student[][] = Array.from({ length: teamCount }, () => []);
       const assignedIds = new Set<string>();
-
-      const shuffle = <T,>(arr: T[]) => {
-        const newArr = [...arr];
-        for (let i = newArr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-        }
-        return newArr;
-      };
 
       // 2. Handle Group Conditions (4 Team)
       if (selectedMode === '4TEAM') {
