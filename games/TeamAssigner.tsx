@@ -114,6 +114,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
             setIsLoadingFire(false);
             return;
           }
+        } else {
+          console.warn("Firebase DB is not initialized. Using local storage.");
         }
         // Fallback LocalStorage (CRITICAL: Keep same key)
         const saved = localStorage.getItem('team_data_v3');
