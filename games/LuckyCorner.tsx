@@ -8,10 +8,10 @@ interface Props {
 type Step = 'INTRO' | 'CHOICE' | 'EXPLOSION';
 
 const CORNERS = [
-  { id: 1, color: 'bg-red-600', label: '구석 1', positionClass: 'top-[20%] left-[5%]' },
-  { id: 2, color: 'bg-yellow-500', label: '구석 2', positionClass: 'top-[20%] right-[5%]' },
-  { id: 3, color: 'bg-green-600', label: '구석 3', positionClass: 'bottom-[10%] left-[5%]' },
-  { id: 4, color: 'bg-blue-600', label: '구석 4', positionClass: 'bottom-[10%] right-[5%]' },
+  { id: 1, color: 'bg-red-600', label: '구석 1', positionClass: 'top-4 left-4' },
+  { id: 2, color: 'bg-yellow-500', label: '구석 2', positionClass: 'top-32 right-4' },
+  { id: 3, color: 'bg-green-600', label: '구석 3', positionClass: 'bottom-4 left-4' },
+  { id: 4, color: 'bg-blue-600', label: '구석 4', positionClass: 'bottom-4 right-4' },
 ];
 
 export const LuckyCorner: React.FC<Props> = ({ onBack }) => {
@@ -176,8 +176,8 @@ export const LuckyCorner: React.FC<Props> = ({ onBack }) => {
             </div>
 
             {/* Teacher's Desk */}
-            <div className="absolute top-32 left-12 w-40 h-24 bg-slate-700 border-2 border-slate-500 rounded-lg flex items-center justify-center z-10 transform -rotate-2 shadow-lg">
-               <span className="text-xl font-jua text-slate-400">선생님 책상</span>
+            <div className="absolute top-4 right-4 w-32 h-20 bg-slate-700 border-2 border-slate-500 rounded-lg flex items-center justify-center z-10 shadow-lg">
+               <span className="text-lg font-jua text-slate-400">선생님 책상</span>
             </div>
 
             {/* Corners - Positioned Absolutely */}
@@ -190,20 +190,20 @@ export const LuckyCorner: React.FC<Props> = ({ onBack }) => {
                 <div 
                   key={corner.id}
                   className={`
-                    absolute w-64 h-64 rounded-full flex items-center justify-center transition-all duration-200 border-4 border-white/20 shadow-2xl
+                    absolute w-48 h-48 md:w-56 md:h-56 rounded-full flex items-center justify-center transition-all duration-200 border-4 border-white/20 shadow-2xl
                     ${corner.positionClass}
-                    ${isExploded ? 'bg-red-600 z-20 scale-125 shadow-[0_0_80px_rgba(220,38,38,0.9)]' : ''}
+                    ${isExploded ? 'bg-red-600 z-20 scale-110 shadow-[0_0_80px_rgba(220,38,38,0.9)]' : ''}
                     ${isSafe ? 'opacity-40 grayscale-[0.5]' : ''}
                     ${!isExploded && !isSafe ? corner.color : ''}
-                    ${isHighlight ? 'brightness-150 scale-110' : ''}
+                    ${isHighlight ? 'brightness-150 scale-105' : ''}
                   `}
                 >
                    {/* Corner Label */}
                    <div className="flex flex-col items-center">
-                      <div className="text-7xl md:text-9xl font-black-han text-white drop-shadow-lg mb-2">
+                      <div className="text-6xl md:text-8xl font-black-han text-white drop-shadow-lg mb-1">
                          {corner.id}
                       </div>
-                      <div className="text-3xl font-jua text-white/90">{corner.label}</div>
+                      <div className="text-2xl font-jua text-white/90">{corner.label}</div>
                    </div>
 
                    {/* Explosion Graphic */}

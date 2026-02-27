@@ -287,21 +287,21 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
   );
 
   const renderReadyScreen = () => (
-    <div className="h-full flex flex-col items-center justify-center p-6 animate-fade-in">
+    <div className="h-full flex flex-col items-center justify-start pt-10 pb-48 px-6 animate-fade-in overflow-y-auto">
        <div className="text-center">
-          <div className="text-9xl mb-8">🎯</div>
-          <h2 className="text-6xl text-white mb-6 drop-shadow-lg" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>준비</h2>
-          <p className="text-2xl text-white/90 mb-12" style={{ fontFamily: '"Jua", sans-serif' }}>문제를 풀 준비가 되셨나요?</p>
+          <div className="text-7xl mb-4">🎯</div>
+          <h2 className="text-5xl text-white mb-4 drop-shadow-lg" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>준비</h2>
+          <p className="text-xl text-white/90 mb-8" style={{ fontFamily: '"Jua", sans-serif' }}>문제를 풀 준비가 되셨나요?</p>
           
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 mb-10 max-w-md mx-auto">
-             <p className="text-white text-xl mb-3" style={{ fontFamily: '"Jua", sans-serif' }}>📋 현재 문제</p>
-             <p className="text-5xl text-yellow-300 mb-4" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{questionNum}</p>
-             <p className="text-white/80 text-lg" style={{ fontFamily: '"Jua", sans-serif' }}>번 문제</p>
+          <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-md mx-auto">
+             <p className="text-white text-lg mb-2" style={{ fontFamily: '"Jua", sans-serif' }}>📋 현재 문제</p>
+             <p className="text-4xl text-yellow-300 mb-2" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{questionNum}</p>
+             <p className="text-white/80 text-base" style={{ fontFamily: '"Jua", sans-serif' }}>번 문제</p>
           </div>
 
           <button 
              onClick={startQuiz}
-             className="text-3xl px-16 py-6 bg-green-500 hover:bg-green-400 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+             className="text-2xl px-12 py-4 bg-green-500 hover:bg-green-400 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 mb-8"
              style={{ fontFamily: '"Jua", sans-serif' }}
           > 
              📝 문제 제시 
@@ -311,18 +311,18 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
   );
 
   const renderQuizScreen = () => (
-    <div className="h-full flex flex-col items-center justify-center p-6">
+    <div className="h-full flex flex-col items-center justify-start pt-4 pb-48 px-6 overflow-y-auto">
        <div className="text-center w-full max-w-7xl">
           {/* Header */}
-          <div className="flex justify-center items-center mb-8 px-4 relative">
-             <div className="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3">
-                <span className="text-white text-2xl" style={{ fontFamily: '"Jua", sans-serif' }}>
-                  📊 문제 <span className="text-3xl">{questionNum}</span>
+          <div className="flex justify-center items-center mb-4 px-4 relative">
+             <div className="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-2">
+                <span className="text-white text-xl" style={{ fontFamily: '"Jua", sans-serif' }}>
+                  📊 문제 <span className="text-2xl">{questionNum}</span>
                 </span>
              </div>
              <button 
                 onClick={restartGame}
-                className="absolute right-4 text-lg px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="absolute right-4 text-base px-3 py-1 bg-red-500 hover:bg-red-400 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
                 style={{ fontFamily: '"Jua", sans-serif' }}
              > 
                🔄 처음부터 
@@ -330,41 +330,41 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
           </div>
 
           {/* Timer */}
-          <div className="relative w-48 h-48 mx-auto mb-10">
-             <svg className="w-full h-full transform -rotate-90">
-                <circle cx="96" cy="96" r="88" stroke="rgba(255,255,255,0.2)" strokeWidth="12" fill="none" />
+          <div className="relative w-32 h-32 mx-auto mb-4">
+             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
+                <circle cx="64" cy="64" r="58" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
                 <circle 
                   className="timer-ring" 
-                  cx="96" cy="96" r="88" 
-                  stroke="#fbbf24" strokeWidth="12" fill="none" strokeLinecap="round" 
-                  strokeDasharray={circumference} 
-                  strokeDashoffset={dashOffset} 
+                  cx="64" cy="64" r="58" 
+                  stroke="#fbbf24" strokeWidth="8" fill="none" strokeLinecap="round" 
+                  strokeDasharray={364.4} 
+                  strokeDashoffset={(364.4 / circumference) * dashOffset} 
                 />
              </svg>
              <div className="absolute inset-0 flex items-center justify-center">
-                <span className={`text-8xl text-white drop-shadow-lg ${timerAnimClass}`} style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
+                <span className={`text-6xl text-white drop-shadow-lg ${timerAnimClass}`} style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                    {timeLeft}
                 </span>
              </div>
           </div>
 
           {/* Question Card */}
-          <div className="bg-white rounded-3xl shadow-2xl p-12 mb-6 animate-bounce-in">
-             <p className="text-gray-500 text-3xl mb-4" style={{ fontFamily: '"Jua", sans-serif' }}>이 단어는 무엇일까요?</p>
+          <div className="bg-white rounded-3xl shadow-2xl p-8 mb-4 animate-bounce-in">
+             <p className="text-gray-500 text-2xl mb-2" style={{ fontFamily: '"Jua", sans-serif' }}>이 단어는 무엇일까요?</p>
              <div className="super-large-text text-purple-600 tracking-wider" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                 {currentWord.substring(0, 2)}<span className="text-gray-300">○○</span>
-             </div>
+              </div>
           </div>
-          <p className="text-white/80 text-3xl" style={{ fontFamily: '"Jua", sans-serif' }}>정답을 생각해보세요! 🤔</p>
+          <p className="text-white/80 text-2xl" style={{ fontFamily: '"Jua", sans-serif' }}>정답을 생각해보세요! 🤔</p>
        </div>
     </div>
   );
 
   const renderAnswerScreen = () => (
-     <div className="h-full flex flex-col items-center justify-center p-6 pb-32">
+     <div className="h-full flex flex-col items-center justify-start pt-10 px-6 pb-48 overflow-y-auto">
         <button 
            onClick={restartGame}
-           className="absolute top-6 right-6 text-lg px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 z-10"
+           className="absolute top-6 right-6 text-base px-3 py-1 bg-red-500 hover:bg-red-400 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 z-10"
            style={{ fontFamily: '"Jua", sans-serif' }}
         > 
            🔄 처음부터 
@@ -373,11 +373,11 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
         <div className="text-center w-full max-w-7xl">
            {screen === 'ANSWER_WAIT' ? (
               <div className="animate-bounce-in">
-                 <div className="text-8xl mb-6">⏰</div>
-                 <p className="text-white/90 text-4xl mb-10" style={{ fontFamily: '"Jua", sans-serif' }}>시간이 끝났습니다!</p>
+                 <div className="text-7xl mb-4">⏰</div>
+                 <p className="text-white/90 text-3xl mb-6" style={{ fontFamily: '"Jua", sans-serif' }}>시간이 끝났습니다!</p>
                  <button 
                     onClick={revealAnswer}
-                    className="text-4xl px-16 py-6 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="text-3xl px-12 py-4 bg-blue-500 hover:bg-blue-400 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
                     style={{ fontFamily: '"Jua", sans-serif' }}
                  > 
                     👀 정답 보기 
@@ -385,16 +385,16 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
               </div>
            ) : (
               <div className="animate-bounce-in">
-                 <div className="text-8xl mb-6">✨</div>
-                 <p className="text-white/90 text-4xl mb-6" style={{ fontFamily: '"Jua", sans-serif' }}>정답은...</p>
-                 <div className="bg-white rounded-3xl shadow-2xl p-12 mb-10">
+                 <div className="text-7xl mb-4">✨</div>
+                 <p className="text-white/90 text-3xl mb-4" style={{ fontFamily: '"Jua", sans-serif' }}>정답은...</p>
+                 <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6">
                     <div className="super-large-text text-purple-600" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
                        {currentWord}
                     </div>
                  </div>
                  <button 
                     onClick={prepareQuiz}
-                    className="text-3xl px-14 py-5 bg-yellow-400 hover:bg-yellow-300 text-purple-800 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="text-2xl px-10 py-4 bg-yellow-400 hover:bg-yellow-300 text-purple-800 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
                     style={{ fontFamily: '"Jua", sans-serif' }}
                  > 
                     다음 문제 ➡️ 
@@ -428,18 +428,19 @@ export const FourLetterQuiz: React.FC<Props> = ({ onBack }) => {
 
          {/* Scoreboard (Visible if not START) */}
          {screen !== 'START' && (
-            <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-black/60 backdrop-blur-md border-t-4 border-yellow-400 py-3 px-4 overflow-x-auto z-30">
-               <div className="flex justify-center items-center gap-3 min-w-max mx-auto">
+            <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t-2 border-yellow-400 py-2 px-4 overflow-x-auto z-30">
+               <div className="flex justify-center items-center gap-2 min-w-max mx-auto">
                   {scores.map((score, idx) => (
-                     <div key={idx} className="rounded-xl shadow-lg p-4 flex flex-col items-center gap-3" style={{ backgroundColor: TEAM_COLORS[idx % TEAM_COLORS.length] }}>
-                        <span className="text-white/90 text-lg" style={{ fontFamily: '"Jua", sans-serif' }}>{idx + 1}팀</span>
-                        <span className={`text-white font-bold text-4xl ${scoreAnimClass[idx] || ''}`}>{score}</span>
-                        <span className="text-white/70 text-sm" style={{ fontFamily: '"Jua", sans-serif' }}>점수</span>
-                        <div className="flex gap-2">
-                           <button onClick={() => updateScore(idx, -10)} className="text-lg px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-lg shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>-10</button>
-                           <button onClick={() => updateScore(idx, 10)} className="text-lg px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-lg shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>+10</button>
+                     <div key={idx} className="rounded-lg shadow-md p-2 flex flex-col items-center gap-1 min-w-[100px]" style={{ backgroundColor: TEAM_COLORS[idx % TEAM_COLORS.length] }}>
+                        <div className="flex items-center gap-2">
+                           <span className="text-white/90 text-sm font-bold" style={{ fontFamily: '"Jua", sans-serif' }}>{idx + 1}팀</span>
+                           <span className={`text-white font-bold text-2xl ${scoreAnimClass[idx] || ''}`}>{score}</span>
                         </div>
-                        <button onClick={() => resetScore(idx)} className="text-sm px-3 py-1 bg-white/30 hover:bg-white/50 text-white rounded-lg shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>점수 초기화</button>
+                        <div className="flex gap-1">
+                           <button onClick={() => updateScore(idx, -10)} className="text-xs px-2 py-1 bg-red-500 hover:bg-red-400 text-white rounded shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>-10</button>
+                           <button onClick={() => updateScore(idx, 10)} className="text-xs px-2 py-1 bg-green-500 hover:bg-green-400 text-white rounded shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>+10</button>
+                           <button onClick={() => resetScore(idx)} className="text-xs px-2 py-1 bg-white/30 hover:bg-white/50 text-white rounded shadow active:scale-95 transition-transform" style={{ fontFamily: '"Jua", sans-serif' }}>초기화</button>
+                        </div>
                      </div>
                   ))}
                </div>

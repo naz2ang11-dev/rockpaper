@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshCw, Volume2, VolumeX, Swords, Shuffle, Repeat, ArrowLeft, Home } from 'lucide-react';
+import { RefreshCw, Volume2, VolumeX, Swords, Shuffle, Repeat, ArrowLeft, Home, Play } from 'lucide-react';
 import { Team, GameMode, TagHistoryItem } from '../types';
 
 interface Props {
@@ -104,6 +104,7 @@ const HistoryLog = ({ history }: { history: TagHistoryItem[] }) => {
 // --- Main Component ---
 
 export const OneStepTag: React.FC<Props> = ({ onBack }) => {
+  const [showIntro, setShowIntro] = useState(true);
   const [currentTeam, setCurrentTeam] = useState<Team>(null);
   const [history, setHistory] = useState<TagHistoryItem[]>([]);
   const [mode, setMode] = useState<GameMode>(GameMode.SEQUENTIAL);
@@ -112,6 +113,10 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
   
   // Calculate turn number based on history
   const turnCount = history.length;
+
+  const handleStart = () => {
+    setShowIntro(false);
+  };
 
   // Load history from LocalStorage on mount
   useEffect(() => {
@@ -237,10 +242,83 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
     }, 250);
   }, [history, mode, turnCount, isSoundOn, isAnimating]);
 
+  const renderIntro = () => (
+    <div className="flex-1 flex flex-col items-center justify-center p-6 animate-fade-in text-center relative bg-slate-50">
+       <button 
+          onClick={onBack}
+          className="absolute top-6 left-6 px-6 py-3 rounded-2xl bg-white text-slate-700 text-lg font-bold border border-slate-200 shadow-md hover:bg-slate-50 transition-all flex items-center gap-2 z-20"
+          style={{ fontFamily: '"Jua", sans-serif' }}
+       >
+          <Home size={24} className="text-green-500" /> <span>홈으로</span>
+       </button>
+       
+       <div className="text-9xl mb-6 animate-bounce">♟️</div>
+       <h1 className="text-6xl md:text-8xl text-slate-800 mb-6" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>
+         체스 술래잡기
+       </h1>
+       
+       <div className="bg-white rounded-3xl p-8 max-w-3xl w-full mb-10 text-left border border-slate-200 shadow-xl">
+          <h3 className="text-3xl text-green-600 mb-6 font-black-han">📜 게임 규칙</h3>
+          <ul className="space-y-4 text-xl text-slate-700 font-jua">
+            <li className="flex items-start gap-3">
+              <span className="text-2xl">1️⃣</span>
+              <span>두 팀이 번갈아가며 한 발씩 움직입니다.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-2xl">2️⃣</span>
+              <span>움직인 후에는 두 발을 고정하고 팔을 휘둘러 상대방을 터치할 수 있습니다.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-2xl">3️⃣</span>
+              <span>터치당하면 <strong>아웃</strong>! 아웃된 사람은 그 자리에 앉아서 대기합니다.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-2xl">4️⃣</span>
+              <span>한 팀이 전멸하거나 <strong>20턴</strong>이 지나면 게임이 종료됩니다.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-2xl">🏆</span>
+              <span>20턴 종료 시 <strong>살아남은 사람이 많은 팀</strong>이 승리합니다!</span>
+            </li>
+          </ul>
+          
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <h4 className="text-2xl text-blue-600 mb-4 font-black-han">⚙️ 모드 설명</h4>
+            <div className="space-y-3 text-lg text-slate-600 font-jua">
+              <p>🔄 <strong>순서대로:</strong> 빨강팀과 파랑팀이 정확히 번갈아가며 나옵니다.</p>
+              <p>🎲 <strong>랜덤:</strong> 무작위로 나오지만, 같은 팀이 <strong>4번 연속</strong>으로 나오지는 않습니다.</p>
+            </div>
+          </div>
+       </div>
+
+       <button
+         onClick={handleStart}
+         className="bg-green-600 text-white text-3xl px-16 py-6 rounded-full font-black-han hover:bg-green-500 hover:scale-105 transition-all shadow-lg flex items-center gap-4"
+       >
+         <Play fill="currentColor" /> 게임 시작
+       </button>
+    </div>
+  );
+
+  if (showIntro) return renderIntro();
+
   return (
     <div className="w-full max-w-4xl flex flex-col items-center animate-fade-in px-4">
        {/* Header with Back Button */}
        <div className="w-full flex items-center justify-between mb-8">
+        <button 
+          onClick={() => setShowIntro(true)}
+          className="px-5 py-3 text-slate-700 bg-white rounded-2xl shadow-md hover:bg-slate-50 hover:scale-105 transition-all flex items-center gap-2 border border-slate-200"
+        >
+          <ArrowLeft size={22} className="text-slate-500" />
+          <span className="font-bold text-lg">설명으로</span>
+        </button>
+        <div className="flex flex-col items-center">
+          <span className="text-slate-400 text-sm">체스 술래잡기</span>
+          <span className={`text-2xl font-bold ${turnCount >= 20 ? 'text-red-500 animate-pulse' : 'text-slate-700'}`}>
+            {turnCount} / 20 턴
+          </span>
+        </div>
         <button 
           onClick={onBack}
           className="px-5 py-3 text-slate-700 bg-white rounded-2xl shadow-md hover:bg-slate-50 hover:scale-105 transition-all flex items-center gap-2 border border-slate-200"
@@ -248,7 +326,6 @@ export const OneStepTag: React.FC<Props> = ({ onBack }) => {
           <Home size={22} className="text-green-500" />
           <span className="font-bold text-lg">홈으로</span>
         </button>
-        <span className="text-slate-400">체스 술래잡기</span>
       </div>
 
       {/* Main Game Area */}

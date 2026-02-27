@@ -69,7 +69,35 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
   const [view, setView] = useState<ViewState>('MAIN');
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('STUDENTS');
   
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<Student[]>([
+    { id: '1', name: '강서진', gender: 'MALE' },
+    { id: '2', name: '강준서', gender: 'MALE' },
+    { id: '3', name: '공유진', gender: 'FEMALE' },
+    { id: '4', name: '김려완', gender: 'MALE' },
+    { id: '5', name: '김민결', gender: 'MALE' },
+    { id: '6', name: '김민서', gender: 'MALE' },
+    { id: '7', name: '김상원', gender: 'MALE' },
+    { id: '8', name: '김승호', gender: 'MALE' },
+    { id: '9', name: '김시현', gender: 'FEMALE' },
+    { id: '10', name: '김채민', gender: 'FEMALE' },
+    { id: '11', name: '노슬우', gender: 'MALE' },
+    { id: '12', name: '박나율', gender: 'FEMALE' },
+    { id: '13', name: '박라희', gender: 'FEMALE' },
+    { id: '14', name: '박예은', gender: 'FEMALE' },
+    { id: '15', name: '신시은', gender: 'FEMALE' },
+    { id: '16', name: '신예은', gender: 'FEMALE' },
+    { id: '17', name: '신하주', gender: 'FEMALE' },
+    { id: '18', name: '염세현', gender: 'MALE' },
+    { id: '19', name: '우아영', gender: 'FEMALE' },
+    { id: '20', name: '이다은', gender: 'FEMALE' },
+    { id: '21', name: '이서준', gender: 'MALE' },
+    { id: '22', name: '이승열', gender: 'MALE' },
+    { id: '23', name: '이하늘', gender: 'FEMALE' },
+    { id: '24', name: '임경한', gender: 'MALE' },
+    { id: '25', name: '정예설', gender: 'FEMALE' },
+    { id: '26', name: '최세현', gender: 'MALE' },
+    { id: '27', name: '함지원', gender: 'FEMALE' },
+  ]);
   const [absenteeIds, setAbsenteeIds] = useState<Set<string>>(new Set());
   
   // Data State
@@ -90,8 +118,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
   const [isShuffling, setIsShuffling] = useState(false);
   const [isLoadingFire, setIsLoadingFire] = useState(false);
 
-  // CRITICAL: Keep this ID same as before to ensure data persistence
-  const DOC_ID = 'my_classroom_v3'; 
+  // CRITICAL: Change DOC_ID to force new student list for the new year
+  const DOC_ID = 'my_classroom_2026'; 
 
   // Sorted Students (Ga-Na-Da)
   const sortedStudents = useMemo(() => {
@@ -117,8 +145,8 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
         } else {
           console.warn("Firebase DB is not initialized. Using local storage.");
         }
-        // Fallback LocalStorage (CRITICAL: Keep same key)
-        const saved = localStorage.getItem('team_data_v3');
+        // Fallback LocalStorage (CRITICAL: Change key for new year)
+        const saved = localStorage.getItem('team_data_2026');
         if (saved) {
           const parsed = JSON.parse(saved);
           setStudents(parsed.students || []);
@@ -150,7 +178,7 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
       updatedAt: new Date().toISOString()
     };
 
-    localStorage.setItem('team_data_v3', JSON.stringify(dataToSave));
+    localStorage.setItem('team_data_2026', JSON.stringify(dataToSave));
 
     if (db) {
       try {
@@ -303,13 +331,25 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
 
       // 4. Fill remaining
       const remaining = shuffle(activeStudents.filter(s => !assignedIds.has(s.id)));
-      remaining.forEach(s => {
-        let minIdx = 0;
-        for(let i=1; i<teamCount; i++) {
-          if (buckets[i].length < buckets[minIdx].length) minIdx = i;
-        }
-        buckets[minIdx].push(s);
-      });
+      
+      // Special Rule: If total students is 27 and 2TEAM mode, force 13 for Red and 14 for Blue
+      if (selectedMode === '2TEAM' && activeStudents.length === 27) {
+        remaining.forEach(s => {
+          if (buckets[0].length < 13) {
+            buckets[0].push(s);
+          } else {
+            buckets[1].push(s);
+          }
+        });
+      } else {
+        remaining.forEach(s => {
+          let minIdx = 0;
+          for(let i=1; i<teamCount; i++) {
+            if (buckets[i].length < buckets[minIdx].length) minIdx = i;
+          }
+          buckets[minIdx].push(s);
+        });
+      }
 
       // 5. Final Sort within buckets (Ga-Na-Da)
       const finalTeams = buckets.map(b => b.sort((x, y) => x.name.localeCompare(y.name, 'ko')));
@@ -620,15 +660,15 @@ export const TeamAssigner: React.FC<Props> = ({ onBack }) => {
                       <h3 className={`text-6xl ${config.text} drop-shadow-sm`} style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{config.name}</h3>
                       <span className="text-3xl opacity-60 bg-white/30 px-4 py-1 rounded-full">{members.length}명</span>
                    </div>
-                   <div className="flex-1 content-start overflow-y-auto grid grid-cols-1 xl:grid-cols-2 gap-3 pr-2 custom-scrollbar">
+                   <div className="flex-1 content-start overflow-y-auto grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 pr-2 custom-scrollbar">
                       {members.map(m => (
                          <div key={m.id} className={`
-                           rounded-xl p-4 text-center flex items-center justify-center gap-4 shadow-sm
+                           rounded-lg p-2 text-center flex items-center justify-center gap-2 shadow-sm
                            ${isTransparent ? 'bg-white text-slate-800' : 'bg-white/90 text-slate-900'}
                          `}>
                             {/* Gender Indicator Dot */}
-                            <div className={`w-6 h-6 rounded-full ${m.gender === 'MALE' ? 'bg-blue-500' : 'bg-pink-500'}`} />
-                            <span className="text-6xl md:text-7xl lg:text-8xl tracking-tight leading-tight" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{m.name}</span>
+                            <div className={`w-3 h-3 rounded-full ${m.gender === 'MALE' ? 'bg-blue-500' : 'bg-pink-500'}`} />
+                            <span className="text-2xl md:text-3xl tracking-tight leading-tight" style={{ fontFamily: '"Black Han Sans", sans-serif' }}>{m.name}</span>
                          </div>
                       ))}
                    </div>
