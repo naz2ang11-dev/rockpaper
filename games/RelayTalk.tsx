@@ -143,7 +143,7 @@ export const RelayTalk: React.FC<Props> = ({ onBack }) => {
   };
 
   const startTimer = () => {
-    setTimeLeft(targetCount); // Use the selected difficulty time
+    setTimeLeft(targetCount + 2); // Time is now (number of players + 2) seconds
     setShowTimer(true);
     setIsTimerRunning(true);
     setShowReady(false);
@@ -239,8 +239,8 @@ export const RelayTalk: React.FC<Props> = ({ onBack }) => {
           </li>
           <li className="flex items-start gap-3">
             <span className="text-pink-400">⏱️</span> 
-            <span>난이도 설정에 따라 <strong>{targetCount}초 내에 {targetCount}명</strong>이 말해야 합니다.<br/>
-            <span className="text-sm opacity-80">(기본 설정: 5명 / 5초)</span>
+            <span>난이도 설정에 따라 <strong>{targetCount + 2}초 내에 {targetCount}명</strong>이 말해야 합니다.<br/>
+            <span className="text-sm opacity-80">(기본 설정: 5명 / 7초)</span>
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -294,7 +294,7 @@ export const RelayTalk: React.FC<Props> = ({ onBack }) => {
               className="w-12 h-12 rounded-full bg-cyan-500 hover:bg-cyan-600 text-white text-2xl font-bold transition-all hover:scale-110 active:scale-95 flex items-center justify-center pb-1"
             >+</button>
           </div>
-          <p className="text-center mt-2 text-white/70 text-sm">{targetCount}명 / {targetCount}초</p>
+          <p className="text-center mt-2 text-white/70 text-sm">{targetCount}명 / {targetCount + 2}초</p>
         </div>
       </div>
 
